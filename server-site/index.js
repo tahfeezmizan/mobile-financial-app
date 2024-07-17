@@ -24,9 +24,8 @@ async function run() {
     try {
         // Connect the client to the server	(optional starting in v4.7)
         // await client.connect();
-        const BDcollection = client.db('triprexDB').collection('touristBD');
-        const countriesCollection = client.db('triprexDB').collection('countries');
-
+        const UserCollection = client.db('EasyPayDB').collection('User');
+        
 
 
         // Send a ping to confirm a successful connection
@@ -41,9 +40,9 @@ run().catch(console.dir);
 
 
 app.get('/', (req, res) => {
-    res.send('TripRex server is running')
+    res.send('MFS Services server is running')
 });
 
 app.listen(port, () => {
-    console.log(`TripRex is running port on ${port}`)
+    console.log(`MFS Services is running port on ${port}`)
 })
