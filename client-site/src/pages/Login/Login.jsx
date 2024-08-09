@@ -8,7 +8,7 @@ const Login = () => {
     const [showPin, setShowPin] = useState(false);
 
     const handleLogin = () => {
-        if (pin.length < 5 || pin.length > 8 || !/^\d+$/.test(pin)) {
+        if (pin.length < 5 || pin.length > 8 ) {
             setError('PIN must be a number between 5 to 8 digits.');
             return;
         }
@@ -31,7 +31,7 @@ const Login = () => {
 
     return (
         <div className="flex justify-center items-center h-screen">
-            <div className="bg-gray-200 text-black w-96 p-10 rounded-lg shadow-lg relative">
+            <div className="bg-gray-200 text-black w-[500px] px-16 py-24 rounded-lg shadow-lg relative">
                 <h2 className="text-2xl mb-6 text-center">Login Here</h2>
                 <input
                     type="text"
