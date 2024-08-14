@@ -3,8 +3,10 @@ import { useForm } from 'react-hook-form';
 import { FaGithub, FaRegEye, FaRegEyeSlash } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
+import useAuth from '../../hooks/useAuth';
 
 const SingUp = () => {
+    const { } = useAuth()
     const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate()
     const location = useLocation();
@@ -84,11 +86,11 @@ const SingUp = () => {
                         {errors.password && <span className="text-xs text-red-500">Password is required</span>}
                     </div>
                     <div className="form-control pt-5">
-                        <button className="w-full text-center font-bold text-lg  border border-gray-400 px-7 py-2 tracking-wide hover:bg-yellow-400 hover:border-yellow-400">Login</button>
+                        <button className="w-full text-center font-bold text-lg  border border-gray-400 px-7 py-2 tracking-wide hover:bg-yellow-400 hover:border-yellow-400">Sing Up</button>
 
                     </div>
                 </form>
-                
+
                 <h3 className="text-center pt-3">Have an account? <NavLink to="/singin" className="text-blue-600 hover:text-[#d01818] font-bold">Login</NavLink></h3>
             </div>
         </div>
