@@ -9,8 +9,8 @@ const Navbar = () => {
 
     const links = <>
         <NavLink to='/'>Home</NavLink>
-        <NavLink to='/'>About</NavLink>
-        <NavLink to='/'>Services</NavLink>
+        <NavLink to='/about'>About</NavLink>
+        <NavLink to='/services'>Services</NavLink>
     </>
 
     return (
@@ -30,17 +30,17 @@ const Navbar = () => {
 
                         {open && (
                             <div className="flex justify-center mt-4 md:hidden">
-                                <button className="text-base font-semibold border border-PrimaryColor px-7 py-2 rounded-xl tracking-wide flex items-center gap-2 hover:bg-yellow-400 hover:border-yellow-400">
+                                <NavLink to={'/singin'} className="text-base font-semibold border border-PrimaryColor px-7 py-2 rounded-xl tracking-wide flex items-center gap-2 hover:bg-yellow-400 hover:border-yellow-400">
                                     Login/Register
-                                </button>
+                                </NavLink>
                             </div>
                         )}
                     </div>
                 </div>
 
-                <button className="hidden md:flex text-base font-semibold border border-PrimaryColor px-7 py-2 rounded-xl tracking-wide items-center gap-2 hover:bg-yellow-400 hover:border-yellow-400">
+                <NavLink to={'/singin'} className="hidden md:flex text-base font-semibold border border-PrimaryColor px-7 py-2 rounded-xl tracking-wide items-center gap-2 hover:bg-yellow-400 hover:border-yellow-400">
                     Login/Register
-                </button>
+                </NavLink>
 
                 <div className="text-4xl md:hidden cursor-pointer" onClick={() => setOpen(!open)}>
                     {open ? <IoMdClose /> : <RiMenu3Fill />}
