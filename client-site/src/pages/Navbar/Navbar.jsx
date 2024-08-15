@@ -3,8 +3,10 @@ import { IoMdClose } from "react-icons/io";
 import { IoArrowUpSharp } from "react-icons/io5";
 import { RiMenu3Fill } from "react-icons/ri";
 import { NavLink } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
 
 const Navbar = () => {
+    const { logOut, user } = useAuth;
     const [open, setOpen] = useState(false);
 
     const links = <>
@@ -14,7 +16,7 @@ const Navbar = () => {
     </>
 
     return (
-        <div className="bg-white shadow-md md:shadow-none">
+        <div className="bg-white shadow-md md:shadow-none font-sans">
             <div className="w-full md:w-9/12 mx-auto flex justify-between items-center p-2 font-Inter">
                 <NavLink to={'/'}>
                     {/* <img src={logo} className="" alt="Logo" /> */}

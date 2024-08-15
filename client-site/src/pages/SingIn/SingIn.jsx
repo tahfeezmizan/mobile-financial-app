@@ -4,6 +4,7 @@ import { FaGithub, FaRegEye, FaRegEyeSlash } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
+import { Helmet } from 'react-helmet';
 
 const SingIn = () => {
     const { singIn } = useAuth();
@@ -39,9 +40,9 @@ const SingIn = () => {
 
     return (
         <div className="home-screen flex items-center justify-center bg-base-200">
-            {/* <Helmet>
-                <title>Login - TripRex</title>
-            </Helmet> */}
+            <Helmet>
+                <title>Sing In - Ph Commerce</title>
+            </Helmet>
             <div className="w-full rounded-none max-w-lg p-14 shadow-2xl">
                 <h1 className="text-5xl text-center font-bold py-4">Login now!</h1>
                 <form onSubmit={handleSubmit(onSubmit)} className="py-6 space-y-4">

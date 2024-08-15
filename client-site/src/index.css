@@ -5,3 +5,6 @@
 .home-screen {
     height: calc(100vh - 100px);
 }
+.home {
+    height: calc(100vh - 300px);
+}

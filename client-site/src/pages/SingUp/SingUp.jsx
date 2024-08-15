@@ -3,13 +3,14 @@ import { useForm } from 'react-hook-form';
 import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa';
 import { NavLink, useNavigate } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
+import { Helmet } from 'react-helmet';
 
 
 const SingUp = () => {
     const navigate = useNavigate()
     const { createUser, logOut } = useAuth();
     const [showPassword, setShowPassword] = useState(false);
-    
+
 
     const {
         register,
@@ -39,9 +40,9 @@ const SingUp = () => {
 
     return (
         <div className="home-screen flex items-center justify-center bg-base-200">
-            {/* <Helmet>
-            <title>Login - TripRex</title>
-        </Helmet> */}
+            <Helmet>
+                <title>Sing Up - Ph Commerce</title>
+            </Helmet>
             <div className="w-full rounded-none max-w-lg p-14 shadow-2xl">
                 <h1 className="text-4xl text-center font-bold py-4">Create Account</h1>
                 <form onSubmit={handleSubmit(onSubmit)} className="py-6 space-y-4">
