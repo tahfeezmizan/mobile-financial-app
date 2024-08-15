@@ -26,6 +26,34 @@ async function run() {
         // Connect the client to the server	(optional starting in v4.7)
         await client.connect();
 
+        const productCollection = client.db('phCommerceDB').collection('products');
+
+        app.post('/addproduct', async (req, res) => {
+            try {
+                const newPro = req.body;
+                console.log(newPro);
+                const result = await productCollection.insertOne(newPro);
+                res.send(result)
+
+            } catch (error) {
+                console.error('Error products Adding:', error);
+                res.status(500).json({ message: 'Internal server error', error: error.message });
+            }
+        });
+        
+
+        app.get('/products', async (req, res) => {
+            try {
+                const product = productCollection.find();
+                const result = await product.toArray();
+                res.send(result)
+            } catch (error) {
+                console.error('Error products data:', error);
+                res.status(500).json({ message: 'Internal server error', error: error.message });
+            }
+
+        })
+
 
 
         // Send a ping to confirm a successful connection
