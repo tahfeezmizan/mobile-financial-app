@@ -6,6 +6,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Layout from './Layout/Layout.jsx'
 import SingIn from './pages/SingIn/SingIn.jsx'
 import SingUp from './pages/SingUp/SingUp.jsx'
+import AuthProvider from './Provider/AuthProvider.jsx'
 
 const router = createBrowserRouter([
   {
@@ -31,6 +32,8 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
   </StrictMode>,
 )

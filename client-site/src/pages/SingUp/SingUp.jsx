@@ -1,15 +1,13 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { FaGithub, FaRegEye, FaRegEyeSlash } from 'react-icons/fa';
-import { FcGoogle } from 'react-icons/fc';
-import { NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa';
+import { NavLink } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
 
+
 const SingUp = () => {
-    const { } = useAuth()
+    const {createUser} = useAuth();
     const [showPassword, setShowPassword] = useState(false);
-    const navigate = useNavigate()
-    const location = useLocation();
 
     const {
         register,
@@ -20,6 +18,16 @@ const SingUp = () => {
     const onSubmit = (data) => {
         const { name, email, password } = data;
         console.log(data);
+
+        createUser(email, password)
+            .then(result => {
+                const user = result.user;
+                console.log(user);
+            })
+            .then(error => {
+                const errorMessage = error.message;
+                console.log(errorMessage);
+            })
 
     }
 

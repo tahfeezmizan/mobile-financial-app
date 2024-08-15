@@ -3,8 +3,10 @@ import { useForm } from 'react-hook-form';
 import { FaGithub, FaRegEye, FaRegEyeSlash } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
+import useAuth from '../../hooks/useAuth';
 
 const SingIn = () => {
+    const { singIn } = useAuth();
     const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate()
     const location = useLocation();
@@ -19,6 +21,14 @@ const SingIn = () => {
         const { email, password } = data;
         console.log(data);
 
+        singIn(email, password)
+            .then(result => {
+                const user = result.user;
+                console.log(user);
+            })
+            .then(errors => console.log(errors.message)
+            )
+
     }
 
     const togglePasswordVisibility = () => {
@@ -26,7 +36,7 @@ const SingIn = () => {
     };
 
     return (
-        <div className="home-screen flex items-center justify-center bg-base-200"> 
+        <div className="home-screen flex items-center justify-center bg-base-200">
             {/* <Helmet>
                 <title>Login - TripRex</title>
             </Helmet> */}
