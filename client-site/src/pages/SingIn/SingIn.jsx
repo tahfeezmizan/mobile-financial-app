@@ -25,10 +25,12 @@ const SingIn = () => {
             .then(result => {
                 const user = result.user;
                 console.log(user);
+                navigate(location?.state ? location.state : '/');
             })
-            .then(errors => console.log(errors.message)
-            )
-
+            .then(error => {
+                const errorMessage = error.message;
+                console.log(errorMessage);
+            })
     }
 
     const togglePasswordVisibility = () => {

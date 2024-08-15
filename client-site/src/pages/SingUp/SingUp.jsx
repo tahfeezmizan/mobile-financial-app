@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
 
 
 const SingUp = () => {
-    const {createUser} = useAuth();
+    const navigate = useNavigate()
+    const { createUser, logOut } = useAuth();
     const [showPassword, setShowPassword] = useState(false);
+    
 
     const {
         register,
@@ -22,13 +24,13 @@ const SingUp = () => {
         createUser(email, password)
             .then(result => {
                 const user = result.user;
-                console.log(user);
+                logOut()
+                navigate('/singin')
             })
             .then(error => {
                 const errorMessage = error.message;
                 console.log(errorMessage);
             })
-
     }
 
     const togglePasswordVisibility = () => {
