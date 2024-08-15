@@ -7,10 +7,12 @@ import useAuth from '../../hooks/useAuth';
 import { Helmet } from 'react-helmet';
 
 const SingIn = () => {
-    const { singIn } = useAuth();
+    const { user, singIn, googleLogin } = useAuth();
     const [showPassword, setShowPassword] = useState(false);
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     const location = useLocation();
+    console.log("Sing In", user);
+
 
     const {
         register,
@@ -91,18 +93,16 @@ const SingIn = () => {
                     <div className="py-3 text-base font-medium">Continue With</div>
                     <div className=''>
                         <button
-                            onClick={() => googleLogin()
-                                .then(result => {
-                                    toast.success('Congrs! Google Login Sucessfull');
-                                    navigate(location?.state ? location.state : '/');
-                                })
-                                .catch((error) => {
-                                    const errorText = error.message;
-                                    console.log(errorText)
-                                    const errorMessage = errorText.slice(22, 40);
-                                    toast.error(errorMessage)
-                                })
-                            }
+                            onClick={() => {
+                                googleLogin()
+                                    .then(result => {
+                                        const user = result.user;
+                                        navigate(location?.state ? location.state : '/');
+                                    })
+                                    .then(error => {
+                                        console.log(error.message);
+                                    })
+                            }}
                             className='w-4/5 mx-auto text-3xl flex items-center justify-center rounded-3xl  border border-gray-400 px-7 py-2 tracking-wide hover:bg-yellow-400 hover:border-yellow-400'><FcGoogle />
                         </button>
                     </div>

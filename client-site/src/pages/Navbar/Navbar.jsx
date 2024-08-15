@@ -1,18 +1,17 @@
 import { useState } from "react";
 import { IoMdClose } from "react-icons/io";
-import { IoArrowUpSharp } from "react-icons/io5";
 import { RiMenu3Fill } from "react-icons/ri";
 import { NavLink } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 
 const Navbar = () => {
-    const { logOut, user } = useAuth;
+    const { logOut, user } = useAuth();
     const [open, setOpen] = useState(false);
 
     const links = <>
         <NavLink to='/'>Home</NavLink>
-        <NavLink to='/about'>About</NavLink>
-        <NavLink to='/services'>Services</NavLink>
+        <NavLink to='/'>About</NavLink>
+        <NavLink to='/'>Services</NavLink>
     </>
 
     return (
@@ -40,9 +39,15 @@ const Navbar = () => {
                     </div>
                 </div>
 
-                <NavLink to={'/singin'} className="hidden md:flex text-base font-semibold border border-PrimaryColor px-7 py-2 rounded-xl tracking-wide items-center gap-2 hover:bg-yellow-400 hover:border-yellow-400">
-                    Login/Register
-                </NavLink>
+                {user ? <>
+                    <button onClick={() => logOut()} className="hidden md:flex text-base font-semibold border border-PrimaryColor px-7 py-2 rounded-xl tracking-wide items-center gap-2 hover:bg-yellow-400 hover:border-yellow-400">
+                        Sing Out
+                    </button>
+                </> : <>
+                    <NavLink to={'/singin'} className="hidden md:flex text-base font-semibold border border-PrimaryColor px-7 py-2 rounded-xl tracking-wide items-center gap-2 hover:bg-yellow-400 hover:border-yellow-400">
+                        Login/Register
+                    </NavLink>
+                </>}
 
                 <div className="text-4xl md:hidden cursor-pointer" onClick={() => setOpen(!open)}>
                     {open ? <IoMdClose /> : <RiMenu3Fill />}
