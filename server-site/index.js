@@ -8,8 +8,6 @@ const { MongoClient, ServerApiVersion } = require('mongodb');
 app.use(cors())
 app.use(express.json())
 
-
-
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.7utjicv.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
@@ -28,31 +26,53 @@ async function run() {
 
         const productCollection = client.db('phCommerceDB').collection('products');
 
-        app.post('/addproduct', async (req, res) => {
-            try {
-                const newPro = req.body;
-                console.log(newPro);
-                const result = await productCollection.insertOne(newPro);
-                res.send(result)
-
-            } catch (error) {
-                console.error('Error products Adding:', error);
-                res.status(500).json({ message: 'Internal server error', error: error.message });
-            }
-        });
-        
 
         app.get('/products', async (req, res) => {
             try {
-                const product = productCollection.find();
-                const result = await product.toArray();
-                res.send(result)
+                const page = parseInt(req.query.page) || 0;
+                const size = parseInt(req.query.size) || 10;
+
+                const result = await productCollection.find()
+                    .skip(page * size)
+                    .limit(size)
+                    .toArray();
+
+                res.send(result);
             } catch (error) {
-                console.error('Error products data:', error);
+                console.error('Error fetching products data:', error);
                 res.status(500).json({ message: 'Internal server error', error: error.message });
             }
+        });
 
+
+        // pasinition 
+        app.get('/productcount', async (req, res) => {
+            const count = await productCollection.estimatedDocumentCount();
+            res.send({ count })
         })
+
+
+        // app.get('/products', async (req, res) => {
+        //     try {
+        //         const page = req.query.page || 0;
+        //         const size = req.query.size || 10;
+        //         console.log(page, size);
+
+        //         // const product = productCollection.find();
+        //         const result = await productCollection.find()
+        //             .skip(page * size)
+        //             .limit(size)
+        //             .toArray();
+
+        //         res.send(result)
+        //     } catch (error) {
+        //         console.error('Error products data:', error);
+        //         res.status(500).json({ message: 'Internal server error', error: error.message });
+        //     }
+        // })
+
+
+
 
 
 
