@@ -7,6 +7,8 @@ import Layout from './Layout/Layout.jsx'
 import SingIn from './pages/SingIn/SingIn.jsx'
 import SingUp from './pages/SingUp/SingUp.jsx'
 import AuthProvider from './Provider/AuthProvider.jsx'
+import Products from './pages/Products/Products.jsx'
+import Banner from './pages/Home/Banner.jsx'
 
 const router = createBrowserRouter([
   {
@@ -16,6 +18,11 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home />
+      },
+      {
+        path: "/products",
+        element: <><Banner></Banner><Products /></>,
+        loader: () => fetch('http://localhost:5000/productcount')
       },
       {
         path: "/singin",

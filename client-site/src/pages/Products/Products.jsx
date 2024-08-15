@@ -2,21 +2,29 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { IoGridOutline, IoList } from "react-icons/io5";
 import ProductCard from "./ProductCard";
+import { useLoaderData } from "react-router-dom";
 
 const Products = () => {
     const [selectedOption, setSelectedOption] = useState('none');
+    const [itemsPerPage, setItemsPerPage] = useState(9);
     const [searchText, setSearchText] = useState('');
     const [products, setProducts] = useState([]);
+    const [currentPage, setCurrentPage] = useState(0)
+    const { count } = useLoaderData();
+    const numberOfPages = Math.ceil(count / itemsPerPage);
+    const pages = [...Array(numberOfPages).keys()];
 
+    console.log(count);
 
+    // Update the URL to '/products'
     useEffect(() => {
-        axios.get(`${import.meta.env.VITE_BASE_URL}/products?sort?=${selectedOption ? "asc" : "desc"}`)
+        axios.get(`${import.meta.env.VITE_BASE_URL}/products?page=${currentPage}&size=${itemsPerPage}`)
             .then(res => {
-                setProducts(res.data)
+                setProducts(res.data);
             })
-            .then(err => console.log(err))
+            .catch(err => console.log(err));
+    }, [currentPage, itemsPerPage]);
 
-    }, [])
 
     const handleChange = (event) => {
         setSearchText(event.target?.value);
@@ -32,9 +40,26 @@ const Products = () => {
 
         if (value !== 'none') {
             console.log(value);
-          }
+        }
     }
 
+    const handleItemsPerPage = e => {
+        const values = parseInt(e.target.value)
+        console.log(values);
+        setItemsPerPage(values)
+        setCurrentPage(0)
+    }
+
+    const handlePrevPage = () => {
+        if (currentPage > 0) {
+            setCurrentPage(currentPage - 1)
+        }
+    }
+    const handleNextPage = () => {
+        if (currentPage < pages.length - 1) {
+            setCurrentPage(currentPage + 1)
+        }
+    }
 
 
     return (
@@ -49,7 +74,7 @@ const Products = () => {
                             className="block w-full px-4 py-2 bg-white border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                         >
                             <option value="none">None</option>
-                            <option value="low-to-high">Low to High</option>
+                            <option value="10to-high">Low to High</option>
                             <option value="high-to-low">High to Low</option>
                             <option value="date">Date</option>
                         </select>
@@ -68,12 +93,31 @@ const Products = () => {
                     </div>
                 </div>
 
-
-
                 <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-16">
                     {
                         products?.map(product => <ProductCard product={product} key={product?._id}></ProductCard>)
                     }
+                </div>
+
+                <div className="pagination flex items-center justify-center py-10">
+                    <button onClick={handlePrevPage} className="px-4 py-2 bg-black text-white  mr-3">Prev</button>
+                    {
+                        pages?.map(page => <button
+                            onClick={() => setCurrentPage(page)}
+
+                            key={page} className={currentPage === page ? "px-4 py-2 text-white bg-[#ff8717] hover:bg-[#eb7d16] mr-3" : "px-4 py-2 bg-black text-white  mr-3"}>{page}</button>)
+                    }
+                    <button onClick={handleNextPage} className="px-4 py-2 bg-black text-white  mr-3">Next</button>
+                    <select
+                        value={itemsPerPage}
+                        onChange={handleItemsPerPage}
+                        className="block px-4 py-2 bg-white border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                    >
+                        <option value="5">5</option>
+                        <option value="10">10</option>
+                        <option value="20">20</option>
+                        <option value="40">30</option>
+                    </select>
                 </div>
             </div>
         </div>
