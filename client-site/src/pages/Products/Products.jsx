@@ -5,34 +5,31 @@ import ProductCard from "./ProductCard";
 import { useLoaderData } from "react-router-dom";
 
 const Products = () => {
+    const { count, products: initialProducts } = useLoaderData() || { count: 0, products: [] };
     const [selectedOption, setSelectedOption] = useState('none');
     const [itemsPerPage, setItemsPerPage] = useState(9);
     const [searchText, setSearchText] = useState('');
-    const [products, setProducts] = useState([]);
-    const [currentPage, setCurrentPage] = useState(0)
-    const { count } = useLoaderData();
+    const [products, setProducts] = useState(initialProducts);
+    const [currentPage, setCurrentPage] = useState(0);
     const numberOfPages = Math.ceil(count / itemsPerPage);
     const pages = [...Array(numberOfPages).keys()];
 
-    console.log(count);
 
-    // Update the URL to '/products'
     useEffect(() => {
-        axios.get(`${import.meta.env.VITE_BASE_URL}/products?page=${currentPage}&size=${itemsPerPage}`)
+        axios.get(`${import.meta.env.VITE_BASE_URL}/products?page=${currentPage}&size=${itemsPerPage}&search=${searchText}`)
             .then(res => {
-                setProducts(res.data);
+                setProducts(res.data.products);
             })
             .catch(err => console.log(err));
-    }, [currentPage, itemsPerPage]);
-
+    }, [currentPage, itemsPerPage, searchText]);
 
     const handleChange = (event) => {
         setSearchText(event.target?.value);
     };
 
     const handleSearch = () => {
-        console.log(searchText);
-    }
+        setCurrentPage(0);
+    };
 
     const handleSelect = (event) => {
         const value = event.target.value;
@@ -74,7 +71,7 @@ const Products = () => {
                             className="block w-full px-4 py-2 bg-white border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                         >
                             <option value="none">None</option>
-                            <option value="10to-high">Low to High</option>
+                            <option value="Low to High">Low to High</option>
                             <option value="high-to-low">High to Low</option>
                             <option value="date">Date</option>
                         </select>
