@@ -31,29 +31,42 @@ async function run() {
             try {
                 const page = parseInt(req.query.page) || 0;
                 const size = parseInt(req.query.size) || 10;
-                const search = req.query.search || ''; // default to empty string if no search query
+                const search = req.query.search || '';
+                const sortOption = req.query.sort || '';
 
                 // Create a query object
                 const query = search
-                    ? { productName: { $regex: search, $options: 'i' } } // 'i' for case-insensitive search
+                    ? { productName: { $regex: search, $options: 'i' } }
                     : {};
 
+                // Create a sort object
+                let sort = {};
+                if (sortOption === 'low-to-high') {
+                    sort.price = 1; // Sort by price in ascending order
+                } else if (sortOption === 'high-to-low') {
+                    sort.price = -1; // Sort by price in descending order
+                } else if (sortOption === 'date') {
+                    sort.createdAt = -1; // Sort by date in descending order (newest first)
+                }
+
                 const result = await productCollection.find(query)
+                    .sort(sort) // Apply the sorting
                     .skip(page * size)
                     .limit(size)
                     .toArray();
 
-                const totalProducts = await productCollection.countDocuments(query); // Count the total products based on the search query
+                const totalProducts = await productCollection.countDocuments(query);
 
                 res.json({
                     products: result,
-                    count: totalProducts, // Send the count of products back to the frontend
+                    count: totalProducts,
                 });
             } catch (error) {
                 console.error('Error fetching products data:', error);
                 res.status(500).json({ message: 'Internal server error', error: error.message });
             }
         });
+
 
 
 
