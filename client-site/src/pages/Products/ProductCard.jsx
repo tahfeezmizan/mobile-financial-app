@@ -3,7 +3,7 @@ import bg from '../../assets/slider-bg.jpg';
 
 const ProductCard = ({ product }) => {
     const { productName, productImage, price, description, category, ratings, productCreationDate } = product;
-
+  
     const formattedDate = new Date(productCreationDate);
     const date = `${formattedDate.getMonth() + 1}/${formattedDate.getDate()}/${formattedDate.getFullYear()}`;
 
@@ -21,7 +21,7 @@ const ProductCard = ({ product }) => {
                         <p className="text-gray-500 font-Poppins">category: <span className=' bg-green-200 rounded-full text-black px-2'>{category}</span></p>
                         <p className="text-[#373737] text-base font-Poppins font-semibold">Rating {ratings}</p>
                     </div>
-                    <p className="py-2 px-5">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolores, </p>
+                    <p className="py-2 px-5">{description}</p>
                     <div className="flex items-center justify-between gap-5 px-5 mt-2 pt-2 border-t border-gray-400">
                         <p className="text-[#373737] text-base font-Poppins font-semibold">${price}</p>
 
