@@ -11,12 +11,12 @@ const AuthProvider = ({ children }) => {
     const [isLoading, setIsLoading] = useState(true);
 
     const createUser = (email, password) => {
-        isLoading(true)
+        // isLoading(true)
         return createUserWithEmailAndPassword(auth, email, password);
     }
 
     const singIn = (email, password) => {
-        isLoading(true)
+        // isLoading(true)
         return signInWithEmailAndPassword(auth, email, password);
     }
 
@@ -28,7 +28,7 @@ const AuthProvider = ({ children }) => {
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
             if (currentUser) {
                 setUser(currentUser)
-                console.log(currentUser); 
+                console.log(currentUser);
             }
             setIsLoading(false)
         });

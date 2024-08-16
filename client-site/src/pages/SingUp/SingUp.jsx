@@ -29,7 +29,7 @@ const SingUp = () => {
                 navigate('/singin')
             })
             .then(error => {
-                const errorMessage = error.message;
+                const errorMessage = error?.message;
                 console.log(errorMessage);
             })
     }

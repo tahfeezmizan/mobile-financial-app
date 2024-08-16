@@ -21,7 +21,7 @@ const router = createBrowserRouter([
         loader: () => fetch('http://localhost:5000/productcount')
       },
       {
-        path: "/products",
+        path: "/",
         element: <><Banner></Banner><Products /></>,
         loader: () => fetch('http://localhost:5000/productcount')
       },
