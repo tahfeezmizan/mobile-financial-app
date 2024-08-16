@@ -33,11 +33,28 @@ async function run() {
                 const size = parseInt(req.query.size) || 10;
                 const search = req.query.search || '';
                 const sortOption = req.query.sort || '';
+                const brandname = req.query.brandname || '';
+                const category = req.query.category || ''; // Get category from query params
 
-                // Create a query object
-                const query = search
-                    ? { productName: { $regex: search, $options: 'i' } }
-                    : {};
+                console.log(req.query);
+
+                // Create a query object with $or to search by productname and category, and filter by brandname and category
+                let query = {};
+
+                if (search) {
+                    query.$or = [
+                        { productname: { $regex: search, $options: 'i' } },
+                        { category: { $regex: search, $options: 'i' } }
+                    ];
+                }
+
+                if (brandname) {
+                    query.brandname = { $regex: brandname, $options: 'i' };
+                }
+
+                if (category) {
+                    query.category = { $regex: category, $options: 'i' }; // Add category filter
+                }
 
                 // Create a sort object
                 let sort = {};
@@ -46,7 +63,7 @@ async function run() {
                 } else if (sortOption === 'high-to-low') {
                     sort.price = -1; // Sort by price in descending order
                 } else if (sortOption === 'date') {
-                    sort.createdAt = -1; // Sort by date in descending order (newest first)
+                    sort.productcreationdate = -1; // Sort by date in descending order (newest first)
                 }
 
                 const result = await productCollection.find(query)
