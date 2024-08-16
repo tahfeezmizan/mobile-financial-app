@@ -16,12 +16,19 @@ const Products = () => {
 
 
     useEffect(() => {
-        axios.get(`${import.meta.env.VITE_BASE_URL}/products?page=${currentPage}&size=${itemsPerPage}&search=${searchText}`)
-            .then(res => {
-                setProducts(res.data.products);
-            })
-            .catch(err => console.log(err));
-    }, [currentPage, itemsPerPage, searchText]);
+        axios.get(`${import.meta.env.VITE_BASE_URL}/products`, {
+            params: {
+                page: currentPage,
+                size: itemsPerPage,
+                search: searchText,
+                sort: selectedOption, 
+            }
+        })
+            .then(res => setProducts(res.data.products))
+            .catch(err => console.error(err));
+    }, [currentPage, itemsPerPage, searchText, selectedOption]);
+
+
 
     const handleChange = (event) => {
         setSearchText(event.target?.value);
@@ -71,10 +78,11 @@ const Products = () => {
                             className="block w-full px-4 py-2 bg-white border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                         >
                             <option value="none">None</option>
-                            <option value="Low to High">Low to High</option>
+                            <option value="low-to-high">Low to High</option>
                             <option value="high-to-low">High to Low</option>
                             <option value="date">Date</option>
                         </select>
+
 
                         <div className='flex items-center'>
                             <input
