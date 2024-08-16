@@ -10,7 +10,6 @@ app.use(express.json())
 
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.7utjicv.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 
-// Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
     serverApi: {
         version: ServerApiVersion.v1,
@@ -56,10 +55,10 @@ async function run() {
                     query.category = { $regex: category, $options: 'i' };
                 }
 
-                // Add the price range condition
+                // price range condition
                 query.price = { $gte: minPrice, $lte: maxPrice };
 
-                // Create a sort object
+                // sort object
                 let sort = {};
                 if (sortOption === 'low-to-high') {
                     sort.price = 1;
@@ -88,9 +87,6 @@ async function run() {
         });
 
 
-
-
-
         // pasinition 
         app.get('/productcount', async (req, res) => {
             const count = await productCollection.estimatedDocumentCount();
@@ -117,9 +113,6 @@ async function run() {
         //         res.status(500).json({ message: 'Internal server error', error: error.message });
         //     }
         // })
-
-
-
 
 
 
