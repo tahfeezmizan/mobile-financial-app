@@ -21,8 +21,7 @@ const client = new MongoClient(uri, {
 
 async function run() {
     try {
-        // Connect the client to the server	(optional starting in v4.7)
-        await client.connect();
+        // await client.connect();
 
         const productCollection = client.db('phCommerceDB').collection('products');
 
@@ -34,11 +33,12 @@ async function run() {
                 const search = req.query.search || '';
                 const sortOption = req.query.sort || '';
                 const brandname = req.query.brandname || '';
-                const category = req.query.category || ''; // Get category from query params
+                const category = req.query.category || '';
+                const minPrice = parseFloat(req.query.minPrice) || 0;
+                const maxPrice = parseFloat(req.query.maxPrice) || Number.MAX_VALUE;
 
                 console.log(req.query);
 
-                // Create a query object with $or to search by productname and category, and filter by brandname and category
                 let query = {};
 
                 if (search) {
@@ -53,21 +53,24 @@ async function run() {
                 }
 
                 if (category) {
-                    query.category = { $regex: category, $options: 'i' }; // Add category filter
+                    query.category = { $regex: category, $options: 'i' };
                 }
+
+                // Add the price range condition
+                query.price = { $gte: minPrice, $lte: maxPrice };
 
                 // Create a sort object
                 let sort = {};
                 if (sortOption === 'low-to-high') {
-                    sort.price = 1; // Sort by price in ascending order
+                    sort.price = 1;
                 } else if (sortOption === 'high-to-low') {
-                    sort.price = -1; // Sort by price in descending order
+                    sort.price = -1;
                 } else if (sortOption === 'date') {
-                    sort.productcreationdate = -1; // Sort by date in descending order (newest first)
+                    sort.productcreationdate = -1;
                 }
 
                 const result = await productCollection.find(query)
-                    .sort(sort) // Apply the sorting
+                    .sort(sort)
                     .skip(page * size)
                     .limit(size)
                     .toArray();
@@ -83,6 +86,7 @@ async function run() {
                 res.status(500).json({ message: 'Internal server error', error: error.message });
             }
         });
+
 
 
 
@@ -120,8 +124,8 @@ async function run() {
 
 
         // Send a ping to confirm a successful connection
-        await client.db("admin").command({ ping: 1 });
-        console.log("Pinged your deployment. You successfully connected to MongoDB!");
+        // await client.db("admin").command({ ping: 1 });
+        // console.log("Pinged your deployment. You successfully connected to MongoDB!");
     } finally {
         // Ensures that the client will close when you finish/error
         // await client.close();
