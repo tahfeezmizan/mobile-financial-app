@@ -18,12 +18,12 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
-        loader: () => fetch('http://localhost:5000/productcount')
+        loader: () => fetch(`${import.meta.env.VITE_BASE_URL}/productcount`)
       },
       {
         path: "/",
         element: <><Banner></Banner><Products /></>,
-        loader: () => fetch('http://localhost:5000/productcount')
+        loader: () => fetch(`${import.meta.env.VITE_BASE_URL}/productcount`)
       },
       {
         path: "/singin",
