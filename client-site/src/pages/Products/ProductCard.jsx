@@ -1,17 +1,21 @@
 import React from 'react';
 import bg from '../../assets/slider-bg.jpg';
+import { Helmet } from 'react-helmet';
 
 const ProductCard = ({ product }) => {
     const { productname, productimage, price, description, category, ratings, productcreationdate } = product;
-  
+
     const formattedDate = new Date(productcreationdate);
     const date = `${formattedDate.getMonth() + 1}/${formattedDate.getDate()}/${formattedDate.getFullYear()}`;
 
     return (
         <div className="bg-slate-100 hover:shadow-xl transition duration-300 rounded-xl overflow-hidden">
+            <Helmet>
+                <title>Home - PH Commerce</title>
+            </Helmet>
             <div className="">
-                <div className="w-full h-[334px] overflow-hidden">
-                    <img className="w-full h-full object-cover" src={bg} alt="" />
+                <div className="w-full h-[334px] bg-white overflow-hidden">
+                    <img className="w-full h-full object-cover scale-75" src={productimage} alt="" />
                 </div>
 
                 <div className="mt-6 pb-5">
