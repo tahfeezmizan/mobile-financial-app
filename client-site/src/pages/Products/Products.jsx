@@ -25,35 +25,24 @@ const Products = () => {
                 size: itemsPerPage,
                 search: searchText,
                 sort: selectedOption,
+                brandname: selectedBrand,
+                category: selectedCategory,
             }
         })
             .then(res => setProducts(res.data.products))
             .catch(err => console.error(err));
-    }, [currentPage, itemsPerPage, searchText, selectedOption]);
-
-
-    const [data, setData] = useState([])
-
-    useEffect(() => {
-        axios.get(`${import.meta.env.VITE_BASE_URL}/products`)
-            .then(res => setData(res.data))
-            .catch(err => console.error(err));
-    }, [])
-
-    const cate = products?.filter(item => item.category === "Smartphones")
-
-    console.log('Load Data', products);
+    }, [currentPage, itemsPerPage, searchText, selectedOption, selectedBrand, selectedCategory]);
 
 
     const handleBrandChange = (event) => {
         setSelectedBrand(event.target.value);
-        setCurrentPage(0); // Reset to the first page when filter changes
+        console.log(event.target.value);
+        setCurrentPage(0);
     };
 
     const handleCategoryChange = (event) => {
         setSelectedCategory(event.target.value);
         console.log(event.target.value);
-
         setCurrentPage(0);
     };
 
@@ -66,8 +55,6 @@ const Products = () => {
         setMaxPrice(event.target.value);
         setCurrentPage(0);
     };
-
-
 
     const handleChange = (event) => {
         setSearchText(event.target?.value);
@@ -146,21 +133,28 @@ const Products = () => {
                                 <h3 className="text-2xl">All Categories</h3>
                                 <select value={selectedCategory} onChange={handleCategoryChange}
                                     className="block w-full px-4 py-2 bg-white border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
-                                    <option value="">All Categories</option>
-                                    <option value="Smartphones">Smartphones</option>
-                                    <option value="Laptops">Laptops</option>
+                                    <option value="laptop">Laptop</option>
+                                    <option value="phone">Phone</option>
+                                    <option value="drones">Drones</option>
+                                    <option value="tv">TV</option>
+                                    <option value="earbuds">Earbuds</option>
+                                    <option value="earbuds">Smartwatch</option>
                                 </select>
                             </div>
 
-
                             <div className="space-y-3">
                                 <h3 className="text-2xl">Brands</h3>
-
                                 <select value={selectedBrand} onChange={handleBrandChange}
                                     className="block w-full px-4 py-2 bg-white border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
                                     <option value="">All Brands</option>
-                                    <option value="Brand A">Brand A</option>
-                                    <option value="Brand B">Brand B</option>
+                                    <option value="iPhone">iPhone</option>
+                                    <option value="asus">Asus</option>
+                                    <option value="walton">Walton</option>
+                                    <option value="samsung">Samsung</option>
+                                    <option value="dji">DJI</option>
+                                    <option value="jbl">JBL</option>
+                                    <option value="mackbook">Mackbook</option>
+                                    <option value="lenovo">Lenovo</option>
                                 </select>
                             </div>
 

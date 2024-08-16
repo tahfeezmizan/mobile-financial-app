@@ -2,9 +2,9 @@ import React from 'react';
 import bg from '../../assets/slider-bg.jpg';
 
 const ProductCard = ({ product }) => {
-    const { productName, productImage, price, description, category, ratings, productCreationDate } = product;
+    const { productname, productimage, price, description, category, ratings, productcreationdate } = product;
   
-    const formattedDate = new Date(productCreationDate);
+    const formattedDate = new Date(productcreationdate);
     const date = `${formattedDate.getMonth() + 1}/${formattedDate.getDate()}/${formattedDate.getFullYear()}`;
 
     return (
@@ -15,7 +15,7 @@ const ProductCard = ({ product }) => {
                 </div>
 
                 <div className="mt-6 pb-5">
-                    <h2 className="text-[#373737] text-lg font-Poppins font-semibold px-5">{productName}</h2>
+                    <h2 className="text-[#373737] text-lg font-Poppins font-semibold px-5">{productname}</h2>
 
                     <div className="flex items-center justify-between gap-5 px-5">
                         <p className="text-gray-500 font-Poppins">category: <span className=' bg-green-200 rounded-full text-black px-2'>{category}</span></p>
