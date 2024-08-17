@@ -10,7 +10,7 @@ const Banner = () => {
             backgroundRepeat: 'no-repeat',
         }}>
             <div className="w-full md:w-9/12 mx-auto text-white">
-                <h2 className='text-center text-5xl font-bold'>Buy Best Products From All Of The World</h2>
+                <h2 className='text-center text-5xl font-bold px-3'>Buy Best Products From All Of The World</h2>
             </div>
         </div>
     );
